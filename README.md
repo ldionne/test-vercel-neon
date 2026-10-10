@@ -23,3 +23,10 @@ npm run dev                 # http://localhost:3000
 ```
 
 After changing `db/schema.ts`, run `npm run db:generate -- --name <description>` to create a migration.
+
+## Deployment
+
+Vercel deploys `main` to production and every other branch to a preview. Each preview deployment gets its own Neon
+branch, a copy-on-write copy of the production database. `vercel.json` runs `npm run db:migrate` before
+`next build`, so every deployment migrates the database it is connected to: previews migrate their branch, production
+deployments migrate production.
