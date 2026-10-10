@@ -13,6 +13,7 @@ export default function Home() {
 
       <form action={addMessage}>
         <input name="name" placeholder="Your name" maxLength={50} required />
+        <input name="location" placeholder="Where are you from? (optional)" maxLength={50} />
         <textarea name="body" placeholder="Say hello" maxLength={280} required />
         <button type="submit">Sign the guestbook</button>
       </form>
@@ -36,7 +37,8 @@ async function MessageList() {
       {messages.map((m) => (
         <li key={m.id}>
           <div>
-            <strong>{m.name}</strong> <time>{m.createdAt.toLocaleString("en-US", { timeZone: "UTC" })} UTC</time>
+            <strong>{m.name}</strong>
+            {m.location && <span className="location"> from {m.location}</span>} <time>{m.createdAt.toLocaleString("en-US", { timeZone: "UTC" })} UTC</time>
           </div>
           <p>{m.body}</p>
           <LikeButton id={m.id} initialLikes={m.likes} />

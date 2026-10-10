@@ -9,11 +9,12 @@ import { messages } from "@/db/schema";
 export async function addMessage(formData: FormData) {
   const name = String(formData.get("name") ?? "").trim();
   const body = String(formData.get("body") ?? "").trim();
-  if (!name || !body || name.length > 50 || body.length > 280) {
+  const location = String(formData.get("location") ?? "").trim() || null;
+  if (!name || !body || name.length > 50 || body.length > 280 || (location && location.length > 50)) {
     throw new Error("Invalid message");
   }
 
-  await db().insert(messages).values({ name, body });
+  await db().insert(messages).values({ name, body, location });
   refresh();
 }
 
